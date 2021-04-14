@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    body {
+      font: 15px arial, sans-serif;
+    }
+
+    .property {
+      width: 200px;
+      padding: 3px;
+      font-weight: bold;
+      background-color: rgb(191, 219, 255);
+    }
+
+    .value {
+      width: 200px;
+      padding: 3px;
+      background-color: rgb(132, 185, 255);
+    }
+  </style>
+</head>
+<body>
+  <h2>Finish Line server</h2>
+  <table>
+    <tr>
+      <td class="property">Status</td>
+      <td class="value">ONLINE</td>
+    </tr>
+    <tr>
+      <td class="property">Started on</td>
+      <td class="value" id="startedOn"></td>
+    </tr>
+  </table>
+
+  <script>
+    let today = new Date();
+    let date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+    let time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+    let dateTime = date+' '+time;
+
+    document.getElementById("startedOn").innerText = dateTime;
+  </script>
+</body>
+</html>

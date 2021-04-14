@@ -1,0 +1,5 @@
+{
+  "DB_CONNECTION_URL": "mongodb://127.0.0.1:27017/cs2550-mvc",
+  "JWT_SECRET": "the-rain-in-spain-stays-mainly-in-the-plain",
+  "PORT": 3000
+}
