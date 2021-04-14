@@ -1,10 +1,10 @@
-# Finish Line Server
+# CS255O MVC Server
 
 This project is the API server for the CS2550 MVC projects.
 
 ## Setup and Configuration
 
-This server is designed with a minimum no-hassle amount of setup.  To get it running locally, retty much all you have to do is install MongoDB.
+This server is designed with a minimum no-hassle amount of setup.  To get it running locally, pretty much all you have to do is install MongoDB.
 
 ### Install MongoDB
 
@@ -24,6 +24,156 @@ mongodb://127.0.0.1:27017/cs2550-mvc
 That's it. This project should take care of everything else for you.
 
 No mess. No fuss. No stress.
+
+### Running the server
+To run the server, run the following commands:
+
+```
+npm install
+npm start
+```
+
+
+## API description
+Each user is limited to a total of 20 records.  If a user tries to create more records, they'll get a 400 error.
+
+### Bearer Token
+You need a bearer token, which will identify yourself to the server.  The bearer token is just a GUID (upper or lower case).
+
+Here's an example CURL request:
+
+```
+curl -H "Authorization: Bearer 11119147-72D0-436B-9562-BE861D9DBEF1" http://localhost:3000/api/v1/students
+```
+
+### Students API
+
+You have two endpoints to fetch data.  One will fetch all records, and one will fetch a specific record.
+
+```
+GET http://localhost:3000/api/v1/students
+http://localhost:3000/api/v1/students/:id
+```
+
+To create a new record, do a POST.  Here is an example:
+
+```
+POST http://localhost:3000/api/v1/students
+
+{
+    "studentId": 33334455,
+    "firstName": "Jacob",
+    "lastName": "Carter",
+    "gender": "male",
+    "race": "caucasian",
+    "age": 22,
+    "isVeteran": false
+}
+```
+
+The following validation contstraints will be enforced:
+* `studentId`: 8-digit string, required.  This value is indexed.
+* `firstName`: 50-character string, required
+* `lastName`: 50-chaacter string, required
+* `gender`: string, required.  Must be one of the following values: "male", "female"
+* `race`: string, required.  Must be one of the following values: "caucasian", "black", "hispanic", "asian", "french", "texan", "other"
+* `age`: number, required
+* `isVeteran`: boolean
+
+To modify an existing record, you need the studentId.  The server accepts application/json only.
+
+```
+PUT http://localhost:3000/api/v1/students/12345678
+```
+
+To delete a record, use the same URL:
+
+```
+DELETE http://localhost:3000/api/v1/students/12345678
+```
+
+### Players API
+The players API follows the same pattern as the students endpoints.
+
+```
+POST http://localhost:3000/api/v1/players
+
+{
+    "name": "Larry Bird",
+    "teamName": "Boston Celtics",
+    "number": 33,
+    "position": "Power Forward",
+    "playsOffense": true,
+    "yearsPlayed": 13
+}
+```
+
+For POST/PUT requests, use the following fields:
+* `name`: 50-character string, required
+* `teamName`: 50-character string, required
+* `number`: integer, required
+* `position`: 50-character string, required
+* `playsOffense`: boolean, not required
+* `yearsPlayed`: number between 0 and 50, not required
+
+### Movies API
+The movies API follows the same pattern as the students endpoints.
+
+```
+POST http://localhost:3000/api/v1/movies
+
+{
+    "title": "Star Wars",
+    "mpaRating": "pg",
+    "yearProduced": "1977",
+    "personalRating": 5,
+    "genere": "sci-fi/fantasy",
+    "onBluray": false
+}
+```
+
+For POST/PUT requests, use the following fields:
+* `title`:  50-character string, required
+* `mpaRating`: string, required.  Must be one of the following values: "nr", "g", "pg", "pg-13", "r"
+* `yearProduced`: 4-character string between "1900" and "2100", required.  
+* `personalRating`: number between 0 and 5, not required.  A value of 0 is "not rated"
+* `genere`: string, required.  Must be one of the following values: "other", "action/adventure", "drama", "comedy", "romance", "sci-fi/fantasy"
+* `onBluray`: boolean, not required
+
+### Characters API
+The characters API follows the same pattern as the students endpoints
+
+```
+POST http://localhost:3000/api/v1/characters
+
+{
+  "name": "01",
+  "race": "dwarf",
+  "class": "fighter",
+  "gender": "male",
+  "isRightHanded": true,
+  "strength": 11,
+  "dexterity": 11,
+  "constitution": 11,
+  "intelligence": 11,
+  "wisdom": 11,
+  "charisma": 11
+}
+```
+
+For POST/PUT requests, use the following fields:
+* `name`:  50-character string, required
+* `race`:  20-character string, required
+* `class`:  20-character string, required
+* `gender`: string, required.  Must be one of the following values: "male", "female"
+* `isRightHanded`: boolean, not required, default value of true
+* `strength`: number between 3 and 18, required
+* `dexterity`: number between 3 and 18, required
+* `constitution`: number between 3 and 18, required
+* `intelligence`: number between 3 and 18, required
+* `wisdom`: number between 3 and 18, required
+* `charisma`: number between 3 and 18, required
+
 
 ## Adding endpoints for a new collection
 It's a bottom-up process to add a new collection.  Here is a description of the process, in brief:
